@@ -4,6 +4,10 @@ const userSchema = new mongoose.Schema({
   name: String,
   email: { String, unique: true },
   password: String,
+  role: {
+    enum: ['user', 'admin'],
+    default: 'user'
+  }
 });
 
 const User = mongoose.model("user", userSchema);
