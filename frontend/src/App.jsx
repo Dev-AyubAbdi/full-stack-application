@@ -2,13 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import "./App.css";
 
 function App() {
+  const { data, error, isLoading } = useQuery({
+    queryFn: () =>
+      fetch("http://localhost:2000/api/users/").then((res) => res.json()),
+    queryKey: ["users"],
+  });
 
- const {data, error, isLoading } =  useQuery({
-    queryFn: () => fetch('http://http//localhost:2000/test').then(res => res.json())
-  })
-  if (isLoading) return <h1>Loading..</h1>;
-  if (error) return <h2>errror</h2>;
-  return <div>{data.name}</div>;
+  if (isLoading) return <h1>loading...</h1>;
+  if (error) return <h1>error</h1>;
+
+  return (
+    <div>{data.user.length > 0 && data.user.map((users) => <h1>{users.name}</h1>)}</div>
+  );
 }
 
 export default App;
