@@ -29,7 +29,6 @@ export const TestUser = () => {
 
   const handleAdd = () => {
     mutation.mutate({ name: user, email, password });
-    alert('hello')
   };
   return (
     <div>

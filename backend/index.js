@@ -13,7 +13,7 @@ dotenv.config(); //
 const app = express();
 const PORT = process.env.PORT || 2000;
 
-if (process.env.NODE_ENV == "development") {
+if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
@@ -30,7 +30,7 @@ app.use("/api/users", getUsers);
 app.use(notFound);
 app.use(errorHandler);
 mongoose
-  .connect(process.env.MONGO_URI_PRO)
+  .connect(process.env.NODE_ENV === "development" ? process.env.MONGO_URI_DEV : process.env.MONGO_URI_PRO )
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.log("❌ Connection err:", err));
 
