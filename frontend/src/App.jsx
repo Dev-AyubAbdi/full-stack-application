@@ -4,6 +4,7 @@ import { TestUser } from "./TestUser";
 
 function App() {
   const { data, error, isLoading } = useQuery({
+    queryKey: ['User'],
     queryFn: () =>
       fetch("http://localhost:2000/api/users/").then((res) => res.json()),
   });
