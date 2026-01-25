@@ -1,26 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import "./App.css";
-import { TestUser } from "./TestUser";
+import { Navigate, Route, Routes } from "react-router";
+import { LoginPage } from "./Pages/auth/loginPage";
+import { RegisterPage } from "./Pages/auth/RegisterPage";
+import { DashboardPage } from "./Pages/Dasboard/DashboardPage";
 
 function App() {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['User'],
-    queryFn: () =>
-      fetch("http://localhost:2000/api/users/").then((res) => res.json()),
-  });
-
-  if (isLoading) return <h1>loading...</h1>;
-  if (error) return <h1>error..</h1>;
-
   return (
-    <>
-    <TestUser />
-     <div>
-      {data.user.map((users) => <h1>{users.name}</h1>)}
-      {data.user.map((users) => <h1>{users.email}</h1>)}
-      </div>
-    </>
-   
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="register" element={<RegisterPage />} />
+      {/* TODO to protected route  */}
+      <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/" element={<Navigate to="/login" replace />} />
+    </Routes>
   );
 }
 

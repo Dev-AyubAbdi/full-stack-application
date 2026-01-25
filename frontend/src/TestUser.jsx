@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
+import { Select } from "./components/ui/select";
 
 async function CreateUser(newUser) {
   const response = await fetch("http://localhost:2000/api/user/", {
@@ -38,6 +39,7 @@ export const TestUser = () => {
       <Input type="email" onChange={(e) => setEmail(e.target.value)} /> <br />
       <Input type="password" onChange={(e) => setPassword(e.target.value)} />
       <Input type="text" />
+      <Input Select></Input>
       <Button onClick={handleAdd}>add New User</Button>
     </div>
   );
