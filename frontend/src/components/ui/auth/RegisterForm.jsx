@@ -35,7 +35,7 @@ export const RegisterForm = () => {
     },
     onSuccess: (data) => {
       console.log("success data", data);
-      navigate('/dashboard', replace)
+      // navigate("/dashboard", replace);
     },
     onError: (error) => {
       if (
