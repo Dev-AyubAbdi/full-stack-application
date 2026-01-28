@@ -10,6 +10,6 @@ export const protect = async (req, res, next) => {
     req.user = await User.findById(decode.id).select("-password");
     next();
   } catch (error) {
-    res.json({ message: "invalid or expire token" });
+    res.status(401).json({ message: "invalid or expire token" });
   }
 };

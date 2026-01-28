@@ -39,7 +39,6 @@ export const login = async (req, res, next) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
     const token = generateToken(user._id);
-
     res.json({ token });
   } catch (error) {
    next(error)

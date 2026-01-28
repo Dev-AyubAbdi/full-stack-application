@@ -5,35 +5,34 @@ import { Loader } from "lucide-react";
 import React, { useEffect } from "react";
 import { Navigate, useLocation } from "react-router";
 
-export const ProtectedRoute = ({ children }) => {
-  const { user, setAuth, clearAuth, token} = useAuthStore();
+export const AdminProtectRoute = ({ children }) => {
+  const { user, setAuth, clearAuth, token } = useAuthStore();
 
   const location = useLocation();
 
   const { data, error, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["currentUser"],
     queryFn: async () => {
-      const response = await api.get("/auth/profile",{
+      const response = await api.get("/auth/profile", {
         headers: {
-            Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        
-      })
-       if (!response.data) {
-            throw new Error("Invalid token");
-  }
+      });
+      if (!response.data) {
+        throw new Error("Invalid token");
+      }
       return response.data;
     },
-     enabled: !!token,
+    enabled: !!token,
     retry: 1,
   });
-   if (!token) {
+  if (!token) {
     return <Navigate to={"/login"} state={{ from: location }} replace />;
   }
 
   //   error case
   useEffect(() => {
-    if (isError && data ) {
+    if (isError && data) {
       clearAuth();
     }
   }, [isError, error, data, clearAuth]);
@@ -52,8 +51,14 @@ export const ProtectedRoute = ({ children }) => {
   if (isError) {
     return <Navigate to={"/login"} state={{ from: location }} replace />;
   }
-//   if(!user) {
-//      return <Navigate to={"/login"} state={{ from: location }} replace />;
-//   }
+
+  //   if (!user) {
+  //     return <Navigate to={"/login"} state={{ from: location }} replace />;
+  //   }
+
+  if (user?.role != "admin") {
+    return <Navigate to="/dashboard" state={{ from: location }} replace />;
+  }
+  console.log("userInfo", user);
   return children;
 };
